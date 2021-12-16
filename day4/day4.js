@@ -1,10 +1,24 @@
 class Board {
     constructor(r1,r2,r3,r4,r5) {
-        this.row1 = r1
-        this.row2 = r2
-        this.row3 = r3
-        this.row4 = r4
-        this.row5 = r5
+        this.row = [r1, r2, r3, r4, r5]
+    }
+
+    checkRows() {
+        for(let i = 0; i < this.row.length; i++) {
+            if(this.row[i].filter(x => x=='o').length == 5)
+            return 'BINGO'
+        }
+    }
+
+    checkColumns() {
+        for(let i = 0; i < this.row.length; i++) {
+            let checkColmn = []
+            for(let k = 0; k < this.row.length; k++) {
+                checkColmn.push(this.row[k][i])
+            }
+            if(checkColmn.filter(x => x=='o').length == 5)
+            return 'BINGO'
+        }
     }
 }
 
@@ -37,3 +51,6 @@ function partOne() {
         reader.readAsText(file) 
     }
 }
+
+
+//parasyti clasese metodus, kurie tikrintu isbrauktus skaicius
