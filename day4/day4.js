@@ -1,6 +1,7 @@
 class Board {
     constructor(r1,r2,r3,r4,r5) {
         this.row = [r1, r2, r3, r4, r5]
+        this.sum = 0
     }
 
     checkRows() {
@@ -29,12 +30,20 @@ class Board {
             }
         }
     }
+
+    numberSum() {
+        for(let i = 0; i < this.row.length; i++) {
+            for(let k = 0; k < this.row[0].length; k++) {
+                if(this.row[i][k] != 'o') {
+                    this.sum += parseInt(this.row[i][k])
+                }
+            }
+        }
+    }
 }
 
 let bingoBoards = []
 let bingoNumbers = []
-
-bingo(bingoNumbers, bingoBoards)
 
 // Scanning a file making objects out of boards and putting them in array(bingoBoards), bingo numbers to a seperate array(bingoNumbers)
 
@@ -57,6 +66,9 @@ function partOne() {
             }
             bingoBoards.push(new Board(board[0], board[1], board[2], board[3], board[4]))
         }
+        let answer = result(bingo(bingoNumbers, bingoBoards))
+        console.log(answer)
+
     },false)   
     if(file) {
         reader.readAsText(file) 
@@ -75,4 +87,10 @@ function bingo(numbers, boards) {
             }
         }
     }
+}
+
+function result(arr) {
+    console.log(arr)
+    bingoBoards[arr[1]].numberSum()
+    return arr[0] * bingoBoards[arr[1]].sum
 }
