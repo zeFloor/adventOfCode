@@ -2,6 +2,7 @@ class Board {
     constructor(r1,r2,r3,r4,r5) {
         this.row = [r1, r2, r3, r4, r5]
         this.sum = 0
+        this.wonOn = 0
     }
 
     checkRows() {
@@ -66,8 +67,6 @@ function partOne() {
             }
             bingoBoards.push(new Board(board[0], board[1], board[2], board[3], board[4]))
         }
-        let answer = result(bingo(bingoNumbers, bingoBoards))
-        console.log(answer)
 
     },false)   
     if(file) {
@@ -75,8 +74,7 @@ function partOne() {
     }
 }
 
-
-function bingo(numbers, boards) {
+function bingoFirst(numbers, boards) {
     for(let i = 0; i < numbers.length; i++) {
         for(let k = 0; k < boards.length; k++) {
             boards[k].checkNumber(numbers[i])
@@ -89,8 +87,42 @@ function bingo(numbers, boards) {
     }
 }
 
-function result(arr) {
-    console.log(arr)
+function resultFirst(arr) {
     bingoBoards[arr[1]].numberSum()
-    return arr[0] * bingoBoards[arr[1]].sum
+    console.log(arr[0] * bingoBoards[arr[1]].sum)
+}
+
+//------------------------------------------------------- Part 2 -------------------------------------------------
+
+function bingoLast(numbers, boards) {
+    for(let i = 0; i < numbers.length; i++) {
+        for(let k = 0; k < boards.length; k++) {
+            if(boards[k].wonOn > 0) {
+                continue
+            } else {
+            boards[k].checkNumber(numbers[i])
+            if(boards[k].checkRows() == 'BINGO') 
+                boards[k].wonOn = i
+            else if (boards[k].checkColumns() == 'BINGO')
+                boards[k].wonOn = i
+            }
+        }
+    }
+}
+
+function findLastWinner(boards) {
+    let last = boards[0].wonOn
+    let lastBoard = 0
+    for(let i = 1; i < boards.length; i++) {
+        if(boards[i].wonOn > last) {
+            last = boards[i].wonOn
+            lastBoard = i
+        }
+    }
+    return [last, lastBoard]
+}
+
+function resultLast(arr) {
+    bingoBoards[arr[1]].numberSum()
+    console.log(bingoNumbers[arr[0]] * bingoBoards[arr[1]].sum)
 }
