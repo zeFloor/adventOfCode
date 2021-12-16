@@ -13,11 +13,20 @@ class Board {
     checkColumns() {
         for(let i = 0; i < this.row.length; i++) {
             let checkColmn = []
-            for(let k = 0; k < this.row.length; k++) {
+            for(let k = 0; k < this.row[0].length; k++) {
                 checkColmn.push(this.row[k][i])
             }
             if(checkColmn.filter(x => x=='o').length == 5)
             return 'BINGO'
+        }
+    }
+
+    checkNumber(numb) {
+        for(let i = 0; i < this.row.length; i++) {
+            for(let k = 0; k < this.row[0].length; k++) {
+                if(this.row[i][k] == numb) 
+                this.row[i][k] = 'o'
+            }
         }
     }
 }
@@ -53,4 +62,3 @@ function partOne() {
 }
 
 
-//parasyti clasese metodus, kurie tikrintu isbrauktus skaicius
