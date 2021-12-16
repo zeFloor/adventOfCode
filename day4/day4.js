@@ -34,6 +34,8 @@ class Board {
 let bingoBoards = []
 let bingoNumbers = []
 
+bingo(bingoNumbers, bingoBoards)
+
 // Scanning a file making objects out of boards and putting them in array(bingoBoards), bingo numbers to a seperate array(bingoNumbers)
 
 function partOne() {
@@ -62,3 +64,15 @@ function partOne() {
 }
 
 
+function bingo(numbers, boards) {
+    for(let i = 0; i < numbers.length; i++) {
+        for(let k = 0; k < boards.length; k++) {
+            boards[k].checkNumber(numbers[i])
+            if(boards[k].checkRows() == 'BINGO') {
+                return [numbers[i], k]
+            } else if (boards[k].checkColumns() == 'BINGO') {
+                return [numbers[i], k]
+            }
+        }
+    }
+}
