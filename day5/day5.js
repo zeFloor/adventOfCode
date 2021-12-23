@@ -1,23 +1,20 @@
+let listOfLines = []
+let input = []
+
 class Input {
     constructor(x1, y1, x2, y2) {
         this.x1 = x1
         this.x2 = x2
         this.y1 = y1
         this.y2 = y2
-    }
-
-    checkIfValid() {
-        if(this.x1 === this.x2 || this.y1 === this.y2)
-        return true
-        else
-        return false
+        this.direction = ''
     }
 
     checkDirection() {
         if(this.x1 === this.x2)
-        return 'horizontal'
+        this.direction = 'horizontal'
         else if(this.y1 === this.y2)
-        return 'vertical'
+        this.direction = 'vertical'
     }
 
 }
@@ -28,11 +25,23 @@ function loadFile() {
     let reader = new FileReader()
 
     reader.addEventListener('load', () => {
-        let input = reader.result.split('\n').join(' ').split(' -> ').join(' ').split(' ').join(',').split(',')
+        input = reader.result.split('\n').join(' ').split(' -> ').join(' ').split(' ').join(',').split(',')
         
         console.log(input)
 }, false)
 if(file) {
     reader.readAsText(file)
 }
+}
+
+
+function filterLines(arr) {
+    let counter = 0
+    for(let i = 0; i < arr.length; i = i + 4) {
+        if(arr[i] === arr[i+2] || arr[i+1] === arr[i+3]) {
+            listOfLines.push(new Input(arr[i], arr[i+1], arr[i+2], arr[i+3]))
+            listOfLines[counter].checkDirection()
+            counter++
+        }
+    }
 }
