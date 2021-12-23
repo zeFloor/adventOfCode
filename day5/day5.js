@@ -7,16 +7,19 @@ class Input {
     }
 
     checkIfValid() {
-
+        if(this.x1 === this.x2 || this.y1 === this.y2)
+        return true
+        else
+        return false
     }
 
-    checkIfHorizontal() {
-
+    checkDirection() {
+        if(this.x1 === this.x2)
+        return 'horizontal'
+        else if(this.y1 === this.y2)
+        return 'vertical'
     }
 
-    checkIfVertical() {
-
-    }
 }
 
 
