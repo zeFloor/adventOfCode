@@ -1,5 +1,6 @@
 let listOfLines = []
 let input = []
+let arrMatrix = new Array(999)
 
 class Input {
     constructor(x1, y1, x2, y2) {
@@ -55,6 +56,17 @@ function filterLines(arr) {
             listOfLines[counter].checkDirection()
             listOfLines[counter].checkLength()
             counter++
+        }
+    }
+}
+
+function createArrMatrix() {
+    for(let i = 0; i < arrMatrix.length; i++) {
+        arrMatrix[i] = new Array(999)
+    }
+    for(let i = 0; i < 2; i++) {
+        for(let k = 0; k < 1000; k++) {
+            arrMatrix[i][k] = 0
         }
     }
 }
