@@ -8,26 +8,33 @@ class Input {
         this.x2 = x2
         this.y1 = y1
         this.y2 = y2
-        this.startPoint = 0
+        this.startPointY = 0
+        this.startPointX = 0
         this.direction = ''
         this.lineLength = 0
     }
 
     checkDirection() {
-        if(this.x1 === this.x2) {
+        if(this.x1 === this.x2) 
             this.direction = 'horizontal'
-            this.startPoint = this.x1
-        }
-        else if(this.y1 === this.y2) {
+        else if(this.y1 === this.y2) 
             this.direction = 'vertical'
-            this.startPoint = this.y1
-        }
     }
 
     checkLength() {
         if(this.direction === 'vertical') {
-            this.lineLength = this.x1 - this.x2
-            this.lineLength = Math.abs(this.lineLength)
+            this.lineLength = Math.abs(this.x1 - this.x2)
+        }
+    }
+
+    checkStartPoint() {
+        if(this.direction === 'vertical') {
+            this.startPointY = this.y1
+            this.startPointX = Math.min(this.x1, this.x2)
+        }
+        else if(this.direction === 'horizontal') {
+            this.startPointY = this.x1
+            this.startPointX = Math.min(this.y1, this.y2)
         }
     }
 }
@@ -55,6 +62,7 @@ function filterLines(arr) {
             listOfLines.push(new Input(arr[i], arr[i+1], arr[i+2], arr[i+3]))
             listOfLines[counter].checkDirection()
             listOfLines[counter].checkLength()
+            listOfLines[counter].checkStartPoint()
             counter++
         }
     }
@@ -62,11 +70,17 @@ function filterLines(arr) {
 
 function createArrMatrix() {
     for(let i = 0; i < arrMatrix.length; i++) {
-        arrMatrix[i] = new Array(999)
+        arrMatrix[i] = new Array(1000)
     }
-    for(let i = 0; i < 2; i++) {
-        for(let k = 0; k < 1000; k++) {
+    for(let i = 0; i < arrMatrix.length; i++) {
+        for(let k = 0; k < arrMatrix.length; k++) {
             arrMatrix[i][k] = 0
         }
+    }
+}
+
+function layingPipes(arr) {
+    for(let i = 0; i < arr.length; i++) {
+
     }
 }
