@@ -7,16 +7,28 @@ class Input {
         this.x2 = x2
         this.y1 = y1
         this.y2 = y2
+        this.startPoint = 0
         this.direction = ''
+        this.lineLength = 0
     }
 
     checkDirection() {
-        if(this.x1 === this.x2)
-        this.direction = 'horizontal'
-        else if(this.y1 === this.y2)
-        this.direction = 'vertical'
+        if(this.x1 === this.x2) {
+            this.direction = 'horizontal'
+            this.startPoint = this.x1
+        }
+        else if(this.y1 === this.y2) {
+            this.direction = 'vertical'
+            this.startPoint = this.y1
+        }
     }
 
+    checkLength() {
+        if(this.direction === 'vertical') {
+            this.lineLength = this.x1 - this.x2
+            this.lineLength = Math.abs(this.lineLength)
+        }
+    }
 }
 
 
@@ -41,6 +53,7 @@ function filterLines(arr) {
         if(arr[i] === arr[i+2] || arr[i+1] === arr[i+3]) {
             listOfLines.push(new Input(arr[i], arr[i+1], arr[i+2], arr[i+3]))
             listOfLines[counter].checkDirection()
+            listOfLines[counter].checkLength()
             counter++
         }
     }
