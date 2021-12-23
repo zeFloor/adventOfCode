@@ -16,25 +16,26 @@ class Input {
 
     checkDirection() {
         if(this.x1 === this.x2) 
-            this.direction = 'horizontal'
-        else if(this.y1 === this.y2) 
             this.direction = 'vertical'
+        else if(this.y1 === this.y2) 
+            this.direction = 'horizontal'
     }
 
     checkLength() {
-        if(this.direction === 'vertical') {
+        if(this.direction === 'vertical') 
+            this.lineLength = Math.abs(this.y1 - this.y2)
+        else if(this.direction == "horizontal")
             this.lineLength = Math.abs(this.x1 - this.x2)
-        }
     }
 
     checkStartPoint() {
         if(this.direction === 'vertical') {
-            this.startPointY = this.y1
-            this.startPointX = Math.min(this.x1, this.x2)
-        }
-        else if(this.direction === 'horizontal') {
             this.startPointY = this.x1
             this.startPointX = Math.min(this.y1, this.y2)
+        }
+        else if(this.direction === 'horizontal') {
+            this.startPointY = this.y1
+            this.startPointX = Math.min(this.x1, this.x2)
         }
     }
 }
@@ -81,6 +82,10 @@ function createArrMatrix() {
 
 function layingPipes(arr) {
     for(let i = 0; i < arr.length; i++) {
+        if(arr[i].direction === "vertical") {
+            for(let i = arr[i].startPointY; i <= arr[i].lineLength; i++) {
 
+            }
+        }
     }
 }
