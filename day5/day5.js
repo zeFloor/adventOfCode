@@ -1,6 +1,6 @@
 let listOfLines = []
 let input = []
-let arrMatrix = new Array(999)
+let arrMatrix = new Array(1000)
 
 class Input {
     constructor(x1, y1, x2, y2) {
@@ -30,8 +30,8 @@ class Input {
 
     checkStartPoint() {
         if(this.direction === 'vertical') {
-            this.startPointY = this.x1
-            this.startPointX = Math.min(this.y1, this.y2)
+            this.startPointX = this.x1
+            this.startPointY = Math.min(this.y1, this.y2)
         }
         else if(this.direction === 'horizontal') {
             this.startPointY = this.y1
@@ -82,10 +82,25 @@ function createArrMatrix() {
 
 function layingPipes(arr) {
     for(let i = 0; i < arr.length; i++) {
-        if(arr[i].direction === "vertical") {
-            for(let i = arr[i].startPointY; i <= arr[i].lineLength; i++) {
-
+        if(arr[i].direction === "horizontal") {
+            for(let k = arr[i].startPointX; k <= arr[i].lineLength; k++) {
+                arrMatrix[arr[i].startPointY][k]++
+            }
+        } else if(arr[i].direction === "vertical") {
+            for(let k = arr[i].startPointY; k <= arr[i].lineLength; k++) {
+                arrMatrix[k][arr[i].startPointX]++
             }
         }
     }
+}
+
+function checkAnswer(arr) {
+    let counter = 0
+    for(let i = 0; i < arr.length; i++) {
+        for(let k= 0; k < arr.length; k++) {
+            if(arr[i][k] >= 2)
+            counter++
+        }
+    }
+    return counter
 }
