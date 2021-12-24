@@ -10,6 +10,8 @@ class Input {
         this.y2 = y2
         this.startPointY = 0
         this.startPointX = 0
+        this.endPointX = 0
+        this.endpointY = 0
         this.direction = ''
         this.lineLength = 0
     }
@@ -21,21 +23,16 @@ class Input {
             this.direction = 'horizontal'
     }
 
-    checkLength() {
-        if(this.direction === 'vertical') 
-            this.lineLength = Math.abs(this.y1 - this.y2)
-        else if(this.direction == "horizontal")
-            this.lineLength = Math.abs(this.x1 - this.x2)
-    }
-
     checkStartPoint() {
         if(this.direction === 'vertical') {
             this.startPointX = this.x1
             this.startPointY = Math.min(this.y1, this.y2)
+            this.endPointY = Math.max(this.y1, this.y2)
         }
         else if(this.direction === 'horizontal') {
             this.startPointY = this.y1
             this.startPointX = Math.min(this.x1, this.x2)
+            this.endPointX = Math.max(this.x1, this.x2)
         }
     }
 }
@@ -62,11 +59,11 @@ function filterLines(arr) {
         if(arr[i] === arr[i+2] || arr[i+1] === arr[i+3]) {
             listOfLines.push(new Input(arr[i], arr[i+1], arr[i+2], arr[i+3]))
             listOfLines[counter].checkDirection()
-            listOfLines[counter].checkLength()
             listOfLines[counter].checkStartPoint()
             counter++
         }
     }
+
 }
 
 function createArrMatrix() {
@@ -83,11 +80,11 @@ function createArrMatrix() {
 function layingPipes(arr) {
     for(let i = 0; i < arr.length; i++) {
         if(arr[i].direction === "horizontal") {
-            for(let k = arr[i].startPointX; k <= arr[i].lineLength; k++) {
+            for(let k = arr[i].startPointX; k <= arr[i].endPointX; k++) {
                 arrMatrix[arr[i].startPointY][k]++
             }
         } else if(arr[i].direction === "vertical") {
-            for(let k = arr[i].startPointY; k <= arr[i].lineLength; k++) {
+            for(let k = arr[i].startPointY; k <= arr[i].endPointY; k++) {
                 arrMatrix[k][arr[i].startPointX]++
             }
         }
