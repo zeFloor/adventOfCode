@@ -11,9 +11,8 @@ class Input {
         this.startPointY = 0
         this.startPointX = 0
         this.endPointX = 0
-        this.endpointY = 0
+        this.endPointY = 0
         this.direction = ''
-        this.lineLength = 0
     }
 
     checkDirection() {
@@ -21,6 +20,10 @@ class Input {
             this.direction = 'vertical'
         else if(this.y1 === this.y2) 
             this.direction = 'horizontal'
+        else if((this.x1 > this.x2 && this.y1 < this.y2) || (this.x1 < this.x2 && this.y1 > this.y2))
+            this.direction = 'slash'
+        else if((this.x1 < this.x2 && this.y1 < this.y2) || (this.x1 > this.x2 && this.y1 > this.y2))
+            this.direction = 'backslash'
     }
 
     checkStartPoint() {
@@ -28,11 +31,20 @@ class Input {
             this.startPointX = this.x1
             this.startPointY = Math.min(this.y1, this.y2)
             this.endPointY = Math.max(this.y1, this.y2)
-        }
-        else if(this.direction === 'horizontal') {
+        } else if(this.direction === 'horizontal') {
             this.startPointY = this.y1
             this.startPointX = Math.min(this.x1, this.x2)
             this.endPointX = Math.max(this.x1, this.x2)
+        } else if(this.direction === 'slash') {
+            this.startPointX = Math.max(this.x1, this.x2)
+            this.endPointX = Math.min(this.x1, this.x2)
+            this.startPointY = Math.min(this.y1, this.y2)
+            this.endPointY = Math.max(this.y1, this.y2)
+        } else if(this.direction === 'backslash') {
+            this.startPointX = Math.min(this.x1, this.x2)
+            this.endPointX = Math.max(this.x1, this.x2)
+            this.startPointY = Math.min(this.y1, this.y2)
+            this.endPointY = Math.max(this.y1, this.y2)
         }
     }
 }
@@ -44,7 +56,9 @@ function loadFile() {
 
     reader.addEventListener('load', () => {
         input = reader.result.split('\n').join(' ').split(' -> ').join(' ').split(' ').join(',').split(',')
-        
+        for(let i = 0; i < input.length; i++) {
+            input[i] = parseInt(input[i])
+        }
         console.log(input)
 }, false)
 if(file) {
@@ -57,6 +71,11 @@ function filterLines(arr) {
     let counter = 0
     for(let i = 0; i < arr.length; i = i + 4) {
         if(arr[i] === arr[i+2] || arr[i+1] === arr[i+3]) {
+            listOfLines.push(new Input(arr[i], arr[i+1], arr[i+2], arr[i+3]))
+            listOfLines[counter].checkDirection()
+            listOfLines[counter].checkStartPoint()
+            counter++
+        } else if (Math.abs(arr[i] - arr[i+2]) === Math.abs(arr[i+1] - arr[i+3])) {
             listOfLines.push(new Input(arr[i], arr[i+1], arr[i+2], arr[i+3]))
             listOfLines[counter].checkDirection()
             listOfLines[counter].checkStartPoint()
@@ -100,4 +119,24 @@ function checkAnswer(arr) {
         }
     }
     return counter
+}
+
+//---------------------- PART 2 ------------------------------
+
+function layingPipesPart2(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i].direction === 'slash') {
+            let downwards = arr[i].startPointX
+            for(let k = arr[i].startPointY; k <= arr[i].endPointY; k++) {
+                arrMatrix[k][downwards]++
+                downwards--
+            }
+        } else if(arr[i].direction === 'backslash') {
+            let downwards = arr[i].startPointX
+            for(let k = arr[i].startPointY; k <= arr[i].endPointY; k++) {
+                arrMatrix[k][downwards]++
+                downwards++
+            }
+        }
+    }
 }
