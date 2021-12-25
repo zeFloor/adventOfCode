@@ -10,6 +10,8 @@ function loadFile() {
     }
 }
 
+let lanternfishes = []
+
 class Lanternfish {
     constructor(timer) {
         this.timer = timer
@@ -24,6 +26,7 @@ class Lanternfish {
     }
 
     multiplying() {
-
+        if(this.timer == 0)
+        lanternfishes.push(new Lanternfish(8))
     }
 }
