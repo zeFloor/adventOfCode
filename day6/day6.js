@@ -16,10 +16,14 @@ class Lanternfish {
     }
 
     passingDay() {
-
+        if(this.timer > 0) {
+            this.timer--
+        } else if (this.timer === 0) {
+            this.timer = 6
+        }
     }
 
     multiplying() {
-        
+
     }
 }
