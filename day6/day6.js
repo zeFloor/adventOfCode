@@ -3,14 +3,21 @@ function loadFile() {
     let reader = new FileReader
 
     reader.addEventListener('load', () => {
-        let input = reader.result
+        input = reader.result.split(',')
+        console.log(input)
     }, false)
     if(file) {
         reader.readAsText(file)
     }
 }
-
+let input = []
 let lanternfishes = []
+
+function addingLanternfishes(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        lanternfishes.push(new Lanternfish(arr[i]))
+    }
+}
 
 class Lanternfish {
     constructor(timer) {
