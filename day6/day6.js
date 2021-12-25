@@ -9,3 +9,17 @@ function loadFile() {
         reader.readAsText(file)
     }
 }
+
+class Lanternfish {
+    constructor(timer) {
+        this.timer = timer
+    }
+
+    passingDay() {
+
+    }
+
+    multiplying() {
+        
+    }
+}
